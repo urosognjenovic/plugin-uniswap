@@ -1,0 +1,17 @@
+// Ethereum Contract Addresses
+export const ETHEREUM_STATE_VIEW_ADDRESS =
+  "0x7ffe42c4a5deea5b0fec41c94c136cf115597227";
+export const ETHEREUM_POSITION_MANAGER_ADDRESS =
+  "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e";
+
+// Avalanche Contract Addresses
+export const AVALANCHE_STATE_VIEW_ADDRESS =
+  "0xc3c9e198c735a4b97e3e683f391ccbdd60b69286";
+export const AVALANCHE_POSITION_MANAGER_ADDRESS =
+  "0xb74b1f14d2754acfcbbe1a221023a5cf50ab8acd";
+
+// Base Contract Addresses
+export const BASE_STATE_VIEW_ADDRESS =
+  "0xA3c0c9b65baD0b08107Aa264b0f3dB444b867A71";
+export const BASE_POSITION_MANAGER_ADDRESS =
+  "0x7c5f5a4bbd8fd63184577525326123b519429bdc";
