@@ -16,17 +16,19 @@ export function createPoolKey({
   };
 }
 
-export type ChainAndProviderURL = {
+export type ChainData = {
   chain: Chain | undefined;
   providerURL: string | undefined;
   stateViewAddress: string | undefined;
   positionManagerAddress: string | undefined;
+  poolManagerAddress: string | undefined;
+  blockExplorerURL: string;
 };
 
 export type PoolKey = {
-  currency0: '0x${string}';
-  currency1: '0x${string}';
+  currency0: `0x${string}`;
+  currency1: `0x${string}`;
   fee: number;
   tickSpacing: number;
-  hooks: '0x${string}';
+  hooks: `0x${string}`;
 };

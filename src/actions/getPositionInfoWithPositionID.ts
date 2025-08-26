@@ -17,7 +17,7 @@ import {
   extractChainFromUserMessage,
   validateAndExtractPositionIdFromUserMessage,
 } from "../utils/validation";
-import { ChainAndProviderURL } from "../constants/types";
+import { ChainData } from "../constants/types";
 
 export const getPositionInfoWithPositionIDAction: Action = {
   name: "GET_POSITION_INFO_WITH_POSITION_ID",
@@ -80,15 +80,12 @@ export const getPositionInfoWithPositionIDAction: Action = {
         await callback(responseContent);
       }
 
-      let chainAndProviderURL: ChainAndProviderURL | undefined;
+      let chainData: ChainData | undefined;
       let chain: Chain | undefined;
       let providerURL: string | undefined;
 
       try {
-        chainAndProviderURL = await extractChainFromUserMessage(
-          userMessage,
-          _runtime
-        );
+        chainData = await extractChainFromUserMessage(userMessage, _runtime);
       } catch (error) {
         const responseContent: Content = {
           text:
@@ -102,10 +99,9 @@ export const getPositionInfoWithPositionIDAction: Action = {
         };
       }
 
-      chain = chainAndProviderURL?.chain;
-      providerURL = chainAndProviderURL?.providerURL;
-      let stateViewAddress =
-        chainAndProviderURL?.stateViewAddress as `0x${string}`;
+      chain = chainData?.chain;
+      providerURL = chainData?.providerURL;
+      let stateViewAddress = chainData?.stateViewAddress as `0x${string}`;
 
       const client = initializeClient(chain, providerURL);
 

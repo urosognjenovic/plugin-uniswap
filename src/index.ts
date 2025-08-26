@@ -3,8 +3,9 @@ import { getPoolLiquidityAction } from "./actions/getPoolLiquidity";
 import { getPoolStateAction } from "./actions/getPoolState";
 import { getPoolKeysAction } from "./actions/getPoolKeys";
 import { getPositionInfoWithPositionIDAction } from "./actions/getPositionInfoWithPositionID";
-import { logger } from "@elizaos/core";
 import { calculatePoolIdAction } from "./actions/calculatePoolId";
+import { createPoolAction } from "./actions/createPool";
+import { logger } from "@elizaos/core";
 
 export const uniswapPlugin: Plugin = {
   name: "plugin-uniswap",
@@ -15,6 +16,7 @@ export const uniswapPlugin: Plugin = {
     getPoolKeysAction,
     getPositionInfoWithPositionIDAction,
     calculatePoolIdAction,
+    createPoolAction,
   ],
   init: async (config) => {
     logger.info("Initializing plugin-uniswap");

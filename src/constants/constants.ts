@@ -1,25 +1,147 @@
 import * as addresses from "./addresses";
 import * as chains from "viem/chains";
-import { ChainAndProviderURL } from "./types";
+import * as blockExplorers from "../constants/blockExplorers";
+import { ChainData } from "./types";
 
+export const ZERO_VALUE = BigInt(0);
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 export const SUPPORTED_CHAINS = [
-  {
-    chain: chains.avalanche,
-    providerURL: process.env.ETHEREUM_PROVIDER_AVALANCHE,
-    stateViewAddress: addresses.AVALANCHE_STATE_VIEW_ADDRESS,
-    positionManagerAddress: addresses.AVALANCHE_POSITION_MANAGER_ADDRESS,
-  },
   {
     chain: chains.mainnet,
     providerURL: process.env.EVM_PROVIDER_URL,
     stateViewAddress: addresses.ETHEREUM_STATE_VIEW_ADDRESS,
     positionManagerAddress: addresses.ETHEREUM_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.ETHEREUM_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.ETHEREUM_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.unichain,
+    providerURL: process.env.ETHEREUM_PROVIDER_UNICHAIN,
+    stateViewAddress: addresses.UNICHAIN_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.UNICHAIN_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.UNICHAIN_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.UNICHAIN_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.optimism,
+    providerURL: process.env.ETHEREUM_PROVIDER_OPTIMISM,
+    stateViewAddress: addresses.OPTIMISM_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.OPTIMISM_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.OPTIMISM_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.OPTIMISM_BLOCK_EXPLORER_URL,
   },
   {
     chain: chains.base,
     providerURL: process.env.ETHEREUM_PROVIDER_BASE,
     stateViewAddress: addresses.BASE_STATE_VIEW_ADDRESS,
     positionManagerAddress: addresses.BASE_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.BASE_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.BASE_BLOCK_EXPLORER_URL,
   },
-] as const satisfies readonly ChainAndProviderURL[];
+  {
+    chain: chains.arbitrum,
+    providerURL: process.env.ETHEREUM_PROVIDER_ARBITRUM_ONE,
+    stateViewAddress: addresses.ARBITRUM_ONE_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.ARBITRUM_ONE_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.ARBITRUM_ONE_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.ARBITRUM_ONE_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.polygon,
+    providerURL: process.env.ETHEREUM_PROVIDER_POLYGON,
+    stateViewAddress: addresses.POLYGON_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.POLYGON_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.POLYGON_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.POLYGON_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.blast,
+    providerURL: process.env.ETHEREUM_PROVIDER_BLAST,
+    stateViewAddress: addresses.BLAST_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.BLAST_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.BLAST_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.BLAST_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.zora,
+    providerURL: process.env.ETHEREUM_PROVIDER_ZORA,
+    stateViewAddress: addresses.ZORA_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.ZORA_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.ZORA_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.ZORA_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.worldchain,
+    providerURL: process.env.ETHEREUM_PROVIDER_WORLDCHAIN,
+    stateViewAddress: addresses.WORLDCHAIN_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.WORLDCHAIN_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.WORLDCHAIN_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.WORLDCHAIN_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.ink,
+    providerURL: process.env.ETHEREUM_PROVIDER_INK,
+    stateViewAddress: addresses.INK_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.INK_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.INK_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.INK_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.soneium,
+    providerURL: process.env.ETHEREUM_PROVIDER_SONEIUM,
+    stateViewAddress: addresses.SONEIUM_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.SONEIUM_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.SONEIUM_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.SONEIUM_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.avalanche,
+    providerURL: process.env.ETHEREUM_PROVIDER_AVALANCHE,
+    stateViewAddress: addresses.AVALANCHE_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.AVALANCHE_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.AVALANCHE_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.AVALANCHE_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.bsc,
+    providerURL: process.env.ETHEREUM_PROVIDER_BNB_SMART_CHAIN,
+    stateViewAddress: addresses.BNB_SMART_CHAIN_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.BNB_SMART_CHAIN_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.BNB_SMART_CHAIN_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.BNB_SMART_CHAIN_BLOCK_EXPLORER_URL,
+  },
+  // Testnet chains
+  {
+    chain: chains.unichainSepolia,
+    providerURL: process.env.ETHEREUM_PROVIDER_UNICHAIN_SEPOLIA,
+    stateViewAddress: addresses.UNICHAIN_SEPOLIA_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.UNICHAIN_SEPOLIA_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.UNICHAIN_SEPOLIA_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.UNICHAIN_SEPOLIA_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.sepolia,
+    providerURL: process.env.ETHEREUM_PROVIDER_SEPOLIA,
+    stateViewAddress: addresses.SEPOLIA_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.SEPOLIA_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.SEPOLIA_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.SEPOLIA_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.baseSepolia,
+    providerURL: process.env.ETHEREUM_PROVIDER_BASE_SEPOLIA,
+    stateViewAddress: addresses.BASE_SEPOLIA_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.BASE_SEPOLIA_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.BASE_SEPOLIA_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.BASE_SEPOLIA_BLOCK_EXPLORER_URL,
+  },
+  {
+    chain: chains.arbitrumSepolia,
+    providerURL: process.env.ETHEREUM_PROVIDER_ARBITRUM_SEPOLIA,
+    stateViewAddress: addresses.ARBITRUM_SEPOLIA_STATE_VIEW_ADDRESS,
+    positionManagerAddress: addresses.ARBITRUM_SEPOLIA_POSITION_MANAGER_ADDRESS,
+    poolManagerAddress: addresses.ARBITRUM_SEPOLIA_POOL_MANAGER_ADDRESS,
+    blockExplorerURL: blockExplorers.ARBITRUM_SEPOLIA_BLOCK_EXPLORER_URL,
+  },
+] as const satisfies readonly ChainData[];

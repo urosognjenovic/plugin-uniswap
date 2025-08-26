@@ -1,8 +1,15 @@
-import { ERC20_ABI } from "../constants/abi";
+import { ERC20_ABI, POOL_MANAGER_ABI } from "../constants/abi";
 import { setUpContract } from "./clients";
 import { ZERO_ADDRESS } from "../constants/constants";
 import { getERC20TokenName } from "./gettersERC20";
-import { Chain, keccak256, slice, encodeAbiParameters } from "viem";
+import {
+  Chain,
+  keccak256,
+  slice,
+  encodeAbiParameters,
+  type Hex,
+  encodeFunctionData,
+} from "viem";
 import { PoolKey } from "../constants/types";
 
 // Convert fee to percent (i.e. if fee = 500, the function returns "0.05%")
@@ -45,10 +52,11 @@ export const getPairNames = async (
   return { currency0Name, currency1Name };
 };
 
+// Get poolId from poolKey
 export const getPoolIdFromPoolKey = (poolKey: PoolKey) => {
   const { currency0, currency1, fee, tickSpacing, hooks } = poolKey;
 
-  const encoded = encodeAbiParameters(
+  const encodedParams = encodeAbiParameters(
     [
       { name: "currency0", type: "address" },
       { name: "currency1", type: "address" },
@@ -59,5 +67,19 @@ export const getPoolIdFromPoolKey = (poolKey: PoolKey) => {
     [currency0, currency1, fee, tickSpacing, hooks]
   );
 
-  return slice(keccak256(encoded), 0, 25);
+  return slice(keccak256(encodedParams), 0, 25);
+};
+
+// Encode the data to initialize a pool
+export const encodeCreatePoolData = (
+  poolKey: PoolKey,
+  startingPrice: bigint
+): Hex => {
+  const encodedParams = encodeFunctionData({
+    abi: POOL_MANAGER_ABI,
+    functionName: "initialize",
+    args: [poolKey, startingPrice],
+  });
+
+  return encodedParams;
 };

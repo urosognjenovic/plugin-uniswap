@@ -16,7 +16,7 @@ import {
   validateAndExtractPoolIdFromUserMessage,
   extractChainFromUserMessage,
 } from "../utils/validation";
-import { ChainAndProviderURL } from "../constants/types";
+import { ChainData } from "../constants/types";
 
 export const getPoolLiquidityAction: Action = {
   name: "GET_POOL_LIQUIDITY",
@@ -67,15 +67,12 @@ export const getPoolLiquidityAction: Action = {
         };
       }
 
-      let chainAndProviderURL: ChainAndProviderURL | undefined;
+      let chainData: ChainData | undefined;
       let chain: Chain | undefined;
       let providerURL: string | undefined;
 
       try {
-        chainAndProviderURL = await extractChainFromUserMessage(
-          userMessage,
-          _runtime
-        );
+        chainData = await extractChainFromUserMessage(userMessage, _runtime);
       } catch (error) {
         const responseContent: Content = {
           text: "Error fetching liquidity: " + error + `The chain is ${chain}`,
@@ -88,10 +85,9 @@ export const getPoolLiquidityAction: Action = {
         };
       }
 
-      chain = chainAndProviderURL?.chain;
-      providerURL = chainAndProviderURL?.providerURL;
-      let stateViewAddress =
-        chainAndProviderURL?.stateViewAddress as `0x${string}`;
+      chain = chainData?.chain;
+      providerURL = chainData?.providerURL;
+      let stateViewAddress = chainData?.stateViewAddress as `0x${string}`;
 
       const client = initializeClient(chain, providerURL);
 

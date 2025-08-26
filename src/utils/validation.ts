@@ -2,7 +2,7 @@ import { parseKeyValueXml } from "@elizaos/core/v2";
 import { isHex, isAddress, extractChain } from "viem";
 import { IAgentRuntime, ModelType } from "@elizaos/core";
 import { SUPPORTED_CHAINS } from "../constants/constants";
-import { type ChainAndProviderURL, type PoolKey } from "../constants/types";
+import { type ChainData, type PoolKey } from "../constants/types";
 
 export const validateAndExtractPoolIdFromUserMessage = async (
   message: string | undefined,
@@ -52,7 +52,7 @@ export const validateAndExtractPoolIdFromUserMessage = async (
 export const extractChainFromUserMessage = async (
   message: string | undefined,
   _runtime: IAgentRuntime
-): Promise<ChainAndProviderURL> => {
+): Promise<ChainData> => {
   const prompt = `Figure out the chainId to use from the user message (${message}) for a blockchain API call and pick the match from the list of chains (${SUPPORTED_CHAINS}). Keep in mind that Ethereum is called 'mainnet' in the list. Return an XML block containing only the chainId:
   
   <response>
@@ -77,26 +77,25 @@ export const extractChainFromUserMessage = async (
     throw new Error(`No matching chain found for chainId: ${chainId}`);
   }
 
-  const { providerURL, stateViewAddress, positionManagerAddress } = chainInfo;
-
-  const id = chainId as (typeof SUPPORTED_CHAINS)[number]["chain"]["id"];
-
-  const chain = extractChain({
-    chains: Array.from(
-      SUPPORTED_CHAINS,
-      (chainAndProviderURL) => chainAndProviderURL.chain
-    ),
-    id,
-  });
-
-  const chainAndProviderURL: ChainAndProviderURL = {
+  const {
     chain,
     providerURL,
     stateViewAddress,
     positionManagerAddress,
+    poolManagerAddress,
+    blockExplorerURL,
+  } = chainInfo;
+
+  const chainData: ChainData = {
+    chain,
+    providerURL,
+    stateViewAddress,
+    positionManagerAddress,
+    poolManagerAddress,
+    blockExplorerURL,
   };
 
-  return chainAndProviderURL;
+  return chainData;
 };
 
 export const validateAndExtractPositionIdFromUserMessage = async (
@@ -144,7 +143,7 @@ export const validateAndExtractPositionIdFromUserMessage = async (
   return positionId;
 };
 
-export const validateAndExtractPoolKeysFromUserMessage = async (
+export const validateAndExtractPoolKeyFromUserMessage = async (
   message: string | undefined,
   _runtime: IAgentRuntime
 ): Promise<PoolKey> => {
@@ -154,7 +153,7 @@ export const validateAndExtractPoolKeysFromUserMessage = async (
   fee: number;
   tickSpacing: number;
   hooks: string;
-}. The message is ${message}. Return an XML block containing only the extracted values in the following form:
+}. The message is ${message}. Sort the currencies in the ascending order. Return an XML block containing only the extracted values in the following form:
   
     <response>
       <currency0>
@@ -234,4 +233,37 @@ export const validateAndExtractPoolKeysFromUserMessage = async (
     tickSpacing,
     hooks,
   };
+};
+
+export const validateAndExtractStartingPriceFromUserMessage = async (
+  message: string | undefined,
+  _runtime: IAgentRuntime
+): Promise<bigint> => {
+  const prompt = `Extract the starting price from the user's message. The message is ${message}. Return an XML block containing only the extracted values in the following form:
+  
+    <response>
+      <startingPrice>
+        extracted_starting_price_or_null
+      </startingPrice>
+    </response>
+  `;
+
+  let xmlResponse: string;
+
+  try {
+    xmlResponse = await _runtime.useModel(ModelType.TEXT_SMALL, {
+      prompt,
+    });
+  } catch (error: any) {
+    if (error?.error?.code === 503) {
+      throw new Error("The model is overloaded. Please try again later.");
+    }
+
+    throw error;
+  }
+
+  const startingPriceRequest = parseKeyValueXml(xmlResponse);
+  const startingPrice: bigint = startingPriceRequest?.startingPrice;
+
+  return startingPrice;
 };

@@ -9,7 +9,7 @@ import {
   ActionResult,
 } from "@elizaos/core";
 import { type PoolKey } from "../constants/types";
-import { validateAndExtractPoolKeysFromUserMessage } from "../utils/validation";
+import { validateAndExtractPoolKeyFromUserMessage } from "../utils/validation";
 import { getPoolIdFromPoolKey } from "../utils/helpers";
 
 export const calculatePoolIdAction: Action = {
@@ -34,10 +34,10 @@ export const calculatePoolIdAction: Action = {
   ): Promise<ActionResult> => {
     try {
       const userMessage = message.content.text;
-      let poolKey: PoolKey | undefined;
+      let poolKey: PoolKey;
 
       try {
-        poolKey = await validateAndExtractPoolKeysFromUserMessage(
+        poolKey = await validateAndExtractPoolKeyFromUserMessage(
           userMessage,
           _runtime
         );

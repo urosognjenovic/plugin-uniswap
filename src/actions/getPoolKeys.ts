@@ -16,7 +16,7 @@ import {
   extractChainFromUserMessage,
 } from "../utils/validation";
 import { Chain } from "viem";
-import { ChainAndProviderURL } from "../constants/types";
+import { ChainData } from "../constants/types";
 import { convertFeeToPercent } from "../utils/helpers";
 import { getPairNames } from "../utils/helpers";
 
@@ -64,15 +64,12 @@ export const getPoolKeysAction: Action = {
         };
       }
 
-      let chainAndProviderURL: ChainAndProviderURL | undefined;
+      let chainData: ChainData | undefined;
       let chain: Chain | undefined;
       let providerURL: string | undefined;
 
       try {
-        chainAndProviderURL = await extractChainFromUserMessage(
-          userMessage,
-          _runtime
-        );
+        chainData = await extractChainFromUserMessage(userMessage, _runtime);
       } catch (error) {
         const responseContent: Content = {
           text: "Error fetching pool keys: " + error + `The chain is ${chain}`,
@@ -85,10 +82,10 @@ export const getPoolKeysAction: Action = {
         };
       }
 
-      chain = chainAndProviderURL?.chain;
-      providerURL = chainAndProviderURL?.providerURL;
+      chain = chainData?.chain;
+      providerURL = chainData?.providerURL;
       let positionManagerAddress =
-        chainAndProviderURL?.positionManagerAddress as `0x${string}`;
+        chainData?.positionManagerAddress as `0x${string}`;
 
       const client = initializeClient(chain, providerURL);
 
