@@ -35,7 +35,9 @@ export const getPoolStateAction: Action = {
     _runtime: IAgentRuntime,
     message: Memory,
     _state: State,
-    _options: any,
+    options: {
+      [key: string]: unknown;
+    },
     callback: HandlerCallback
   ): Promise<ActionResult> => {
     try {
