@@ -39,7 +39,7 @@ export const getPoolKeysAction: Action = {
     _state: State,
     options: {
       [key: string]: unknown;
-    },,
+    },
     callback: HandlerCallback
   ): Promise<ActionResult> => {
     try {
