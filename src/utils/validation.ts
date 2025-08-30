@@ -1,5 +1,5 @@
-import { parseKeyValueXml } from "@elizaos/core/v2";
-import { isHex, isAddress, extractChain } from "viem";
+import { parseKeyValueXml } from "@elizaos/core";
+import { isHex, isAddress } from "viem";
 import { IAgentRuntime, ModelType } from "@elizaos/core";
 import { SUPPORTED_CHAINS } from "../constants/constants";
 import { type ChainData, type PoolKey } from "../constants/types";
