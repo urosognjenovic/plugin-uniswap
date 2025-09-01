@@ -43,8 +43,8 @@ export const getPositionInfoWithPositionIDAction: Action = {
   ): Promise<ActionResult> => {
     try {
       const userMessage = message.content.text;
-      let poolId: String | undefined = "";
-      let positionId: String | undefined = "";
+      let poolId: `0x${string}` | undefined;
+      let positionId: `0x${string}` | undefined;
 
       try {
         poolId = await validateAndExtractPoolIdFromUserMessage(
@@ -80,6 +80,10 @@ export const getPositionInfoWithPositionIDAction: Action = {
         };
 
         await callback(responseContent);
+
+        return {
+          success: false,
+        };
       }
 
       let chainData: ChainData | undefined;

@@ -48,7 +48,7 @@ export const getPoolStateAction: Action = {
       // Base poolId for testing
       // const poolId = "0x74B1EB0EB9068ED54B6B9D55673F7DE8FAC3299CE7E3DF916E0172676D225A1A";
       const userMessage = message.content.text;
-      let poolId: String | undefined = "";
+      let poolId: `0x${string}` | undefined;
 
       try {
         poolId = await validateAndExtractPoolIdFromUserMessage(

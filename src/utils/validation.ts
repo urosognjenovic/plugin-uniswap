@@ -7,7 +7,7 @@ import { type ChainData, type PoolKey } from "../constants/types";
 export const validateAndExtractPoolIdFromUserMessage = async (
   message: string | undefined,
   _runtime: IAgentRuntime
-): Promise<String> => {
+): Promise<`0x${string}`> => {
   const prompt = `Extract the poolId from the user's message. The poolId is a hexadecimal value that starts with 0x. The message is ${message}. Return an XML block containing only the extracted value:
   
   <response>
@@ -32,17 +32,17 @@ export const validateAndExtractPoolIdFromUserMessage = async (
   }
 
   const poolIdRequest = parseKeyValueXml(xmlResponse);
-  const poolId = poolIdRequest?.poolId as string;
+  const poolId = poolIdRequest?.poolId as `0x${string}`;
 
   if (!isHex(poolId)) {
     throw new Error(
-      "poolId contains invalid characters! It should only contain hexadecimal characters (0-9 and A-F)!"
+      "poolId contains invalid characters. It should only contain hexadecimal characters (0-9 and A-F)."
     );
   }
 
   if (poolId.length != 66) {
     throw new Error(
-      "poolId has an invalid length! The length should be 66 characters including the '0x' prefix!"
+      "poolId has an invalid length. The length should be 66 characters including the '0x' prefix."
     );
   }
 
@@ -101,7 +101,7 @@ export const extractChainFromUserMessage = async (
 export const validateAndExtractPositionIdFromUserMessage = async (
   message: string | undefined,
   _runtime: IAgentRuntime
-): Promise<String> => {
+): Promise<`0x${string}`> => {
   const prompt = `Extract the positionId from the user's message. The positionId is a bytes32. The message is ${message}. Return an XML block containing only the extracted value:
   
   <response>
@@ -126,7 +126,7 @@ export const validateAndExtractPositionIdFromUserMessage = async (
   }
 
   const positionIdRequest = parseKeyValueXml(xmlResponse);
-  const positionId = positionIdRequest?.positionId as string;
+  const positionId = positionIdRequest?.positionId as `0x${string}`;
 
   if (!isHex(positionId)) {
     throw new Error(
@@ -190,39 +190,39 @@ export const validateAndExtractPoolKeyFromUserMessage = async (
 
   const poolKeyRequest = parseKeyValueXml(xmlResponse);
 
-  const currency0 = poolKeyRequest?.currency0 as "0x${string}";
-  const currency1 = poolKeyRequest?.currency1 as "0x${string}";
+  const currency0 = poolKeyRequest?.currency0 as `0x${string}`;
+  const currency1 = poolKeyRequest?.currency1 as `0x${string}`;
   const fee = poolKeyRequest?.fee;
   const tickSpacing = poolKeyRequest?.tickSpacing;
-  const hooks = poolKeyRequest?.hooks as "0x${string}";
+  const hooks = poolKeyRequest?.hooks as `0x${string}`;
 
   if (!isAddress(currency0)) {
     throw new Error(
-      `currency0 is not a valid adddress. The value you provided is ${currency0}`
+      `currency0 is not a valid adddress. The value you provided is ${currency0}.`
     );
   }
 
   if (!isAddress(currency1)) {
     throw new Error(
-      `currency1 is not a valid adddress. The value you provided is ${currency1}`
+      `currency1 is not a valid adddress. The value you provided is ${currency1}.`
     );
   }
 
   if (fee < 0 || fee > 1_000_000) {
     throw new Error(
-      `Fee outside of valid range (0 - 1_000_000). The value you provided is ${fee}`
+      `Fee outside of valid range (0 - 1_000_000). The value you provided is ${fee}.`
     );
   }
 
   if (tickSpacing < 1 || tickSpacing > 32_767) {
     throw new Error(
-      `tickSpacing outside of valid range (1 - 32_767). The value you provided is ${tickSpacing}`
+      `tickSpacing outside of valid range (1 - 32_767). The value you provided is ${tickSpacing}.`
     );
   }
 
   if (!isAddress(hooks)) {
     throw new Error(
-      `hooks is not a valid adddress. The value you provided is ${hooks}`
+      `hooks is not a valid adddress. The value you provided is ${hooks}.`
     );
   }
 

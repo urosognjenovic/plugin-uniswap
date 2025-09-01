@@ -9,6 +9,7 @@ import {
   encodeAbiParameters,
   type Hex,
   encodeFunctionData,
+  type PublicClient,
 } from "viem";
 import { PoolKey } from "../constants/types";
 
@@ -19,32 +20,24 @@ export const convertFeeToPercent = (fee: number) => {
 
 // Get the names of the pair tokens/coins
 export const getPairNames = async (
-  token0: any,
-  token1: any,
+  token0: `0x${string}`,
+  token1: `0x${string}`,
   chain: Chain | undefined,
-  client: any
+  client: PublicClient
 ) => {
-  let currency0Name: string | undefined = "";
-  let currency1Name: string | undefined = "";
+  let currency0Name: string | undefined;
+  let currency1Name: string | undefined;
 
   if (token0 != ZERO_ADDRESS) {
     const currency0Contract = setUpContract(token0, ERC20_ABI, client);
-    currency0Name = await getERC20TokenName(
-      currency0Contract,
-      ERC20_ABI,
-      client
-    );
+    currency0Name = await getERC20TokenName(currency0Contract);
   } else {
     currency0Name = chain?.nativeCurrency.name;
   }
 
   if (token1 != ZERO_ADDRESS) {
     const currency1Contract = setUpContract(token1, ERC20_ABI, client);
-    currency1Name = await getERC20TokenName(
-      currency1Contract,
-      ERC20_ABI,
-      client
-    );
+    currency1Name = await getERC20TokenName(currency1Contract);
   } else {
     currency1Name = chain?.nativeCurrency.name;
   }

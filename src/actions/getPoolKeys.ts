@@ -44,7 +44,7 @@ export const getPoolKeysAction: Action = {
   ): Promise<ActionResult> => {
     try {
       const userMessage = message.content.text;
-      let poolId: String | undefined = "";
+      let poolId: `0x${string}` | undefined;
 
       try {
         poolId = await validateAndExtractPoolIdFromUserMessage(

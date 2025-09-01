@@ -1,18 +1,21 @@
 // TODO Fix types (remove any)
 
 // Get the total liquidity of the pool
-export const getPoolLiquidity = async (stateView: any, poolId: any) => {
+export const getPoolLiquidity = async (
+  stateView: any,
+  poolId: `0x${string}`
+) => {
   try {
     const liquidity = await stateView.read.getLiquidity([poolId]);
 
     return liquidity;
   } catch (error) {
-    throw new Error("Error fetching pool liquidity:" + error);
+    throw new Error("Error fetching pool liquidity: " + error);
   }
 };
 
 // Get the pool state
-export const getPoolState = async (stateView: any, poolId: any) => {
+export const getPoolState = async (stateView: any, poolId: `0x${string}`) => {
   try {
     const [sqrtPriceX96, tick, protocolFee, lpFee] =
       await stateView.read.getSlot0([poolId]);
@@ -24,6 +27,6 @@ export const getPoolState = async (stateView: any, poolId: any) => {
       lpFee,
     };
   } catch (error) {
-    throw new Error("Error fetching pool state:" + error);
+    throw new Error("Error fetching pool state: " + error);
   }
 };
